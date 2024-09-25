@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row d-flex justify-content-between mb-5">
+            <div class="col-lg-7 col-12">
+                <h4 class="mb-4">Calcula de manera rápida y sencilla</h4>
+                <p>
+                    Con nuestra calculadora de materiales, descubrirás rápidamente la cantidad recomendada de materiales para la separación y nivelación de cada piso.
+                </p>
+                <p>
+                    Solo necesitas proporcionarnos la longitud y la anchura del piso. Con esta información, nuestra calculadora te indicará la recomendación para cada lado del piso y la suma total, teniendo en cuenta todos los lados.
+                </p>
+            </div>
+            <div class="col-lg-4 col-12">
+                <img class="img-thumbnail rounded-4" src="./41FbViG6VxL._AC_SX522_.jpg" alt="Imagen de calculadora de materiales">
+            </div>
+        </div>
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="p-5 rounded-5 bg-primary text-white d-flex justify-content-center align-items-center flex-column">
+                    <h5 class="mb-3">Longitud X</h5>
+                    <div class="input-group mb-3">
+                        <input id="high-tile" type="text" class="form-control" placeholder="Ingresa longitud X" aria-label="Longitud X" aria-describedby="basic-addon1" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                        <div class="input-group-append">
+                        <span class="input-group-text" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">cm</span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <p><strong>Recomendado: <span id="result-x">x</span></strong></p>
+                        <p>piezas para el lado "X"</p>
+                    </div>
+                    </div>
+                </div>
+            
+                <div class="col">
+                    <div class="p-5 rounded-5 bg-secondary text-white d-flex justify-content-center align-items-center flex-column">
+                    <h5 class="mb-3">Longitud Y</h5>
+                    <div class="input-group mb-3">
+                        <input id="width-tile" type="text" class="form-control" placeholder="Ingresa longitud Y" aria-label="Longitud Y" aria-describedby="basic-addon1" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                        <div class="input-group-append">
+                        <span class="input-group-text" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">cm</span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <p><strong>Recomendado: <span id="result-y">y</span></strong></p>
+                        <p>piezas para el lado "Y"</p>
+                    </div>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="p-5 rounded-5 bg-primary text-white d-flex justify-content-center align-items-center flex-column">
+                    <h5 class="mb-3">Área Total de Asentamiento</h5>
+                    <div class="input-group mb-3">
+                        <input id="length-area" type="text" class="form-control" placeholder="Ingresa el área" aria-label="Longitud Z" aria-describedby="basic-addon1" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                        <div class="input-group-append">
+                        <span class="input-group-text" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">m²</span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <p><strong>Cantidad de espaciadores:</strong></p>
+                        <p id="result-spacers">-</p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="./app.js"></script>
+</body>
+</html>

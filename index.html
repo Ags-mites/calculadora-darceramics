@@ -4,70 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://darceramics.com.ec/vistas/css/estilobootstrap.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <div class="row d-flex justify-content-between mb-5">
-            <div class="col-lg-7 col-12">
-                <h4 class="mb-4">Calcula de manera rápida y sencilla</h4>
+        <div class="row d-flex justify-content-between mb-3">
+            <div class="col-12">
+                <h4 class="mb-4">¡Llega la herramienta que estabas esperando!</h4>
                 <p>
-                    Con nuestra calculadora de materiales, descubrirás rápidamente la cantidad recomendada de materiales para la separación y nivelación de cada piso.
+                    Dar Ceramics presenta su nueva calculadora de niveladores para piso y pared 🧱✨
                 </p>
                 <p>
-                    Solo necesitas proporcionarnos la longitud y la anchura del piso. Con esta información, nuestra calculadora te indicará la recomendación para cada lado del piso y la suma total, teniendo en cuenta todos los lados.
+                    Solo necesitas ingresar las medidas del producto (largo y ancho) y del área que vas a instalar… ¡y listo!
+                    En segundos sabrás cuántos niveladores necesitas para tu proyecto, sin complicaciones ni fórmulas.
+                    <br>
+                    <ul class="list-unstyled">
+                        <li>✅ Rápida </li>
+                        <li>✅ Precisa </li>
+                        <li>✅ Súper fácil de usar </li>
+                    </ul>
+                </p>
+                <p>
+                    💡 Ahorra tiempo, evita errores y planifica mejor con esta herramienta pensada para instaladores, distribuidores y constructores.
+                </p>
+                <p>
+                    👉 Pruébala ahora y lleva tu obra al siguiente nivel.
                 </p>
             </div>
-            <div class="col-lg-4 col-12">
-                <img class="img-thumbnail rounded-4" src="./41FbViG6VxL._AC_SX522_.jpg" alt="Imagen de calculadora de materiales">
+        </div>
+        <div class="row d-flex justify-content-center mb-lg-5 mb-3">
+            <div class="col-lg-6 col-12 text-center mb-4 mb-lg-0">
+                <img class="img-thumbnail rounded-4" src="./assets/cunas.jpg" alt="Imagen de calculadora de materiales">
+            </div>
+            <div class="col-lg-6 col-12 text-center">
+                <img class="img-thumbnail rounded-4" src="./assets/espaciadores1.jpg" alt="Imagen de calculadora de materiales">
             </div>
         </div>
         <div class="container">
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
-                    <div class="p-5 rounded-5 bg-primary text-white d-flex justify-content-center align-items-center flex-column">
-                    <h5 class="mb-3">Longitud X</h5>
-                    <div class="input-group mb-3">
-                        <input id="high-tile" type="text" class="form-control" placeholder="Ingresa longitud X" aria-label="Longitud X" aria-describedby="basic-addon1" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
-                        <div class="input-group-append">
-                        <span class="input-group-text" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">cm</span>
+            <div class="row row-cols-1 row-cols-lg-3 g-4 g-md-4 g-lg-4 py-3 py-md-0">
+                <div class="col mb-4 mb-lg-0">
+                    <div class="p-5 rounded bg-primary text-white d-flex flex-column shadow h-100">
+                        <h5 class="mb-3 text-center">Ancho  X</h5>
+                        <div class="input-group mb-3">
+                            <input id="high-tile" type="text" class="form-control" placeholder="Ingresa el Ancho X" aria-label="Ancho X" aria-describedby="basic-addon1">
+                            <div class="input-group-append">
+                            <span class="input-group-text" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">cm</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="text-center">
-                        <p><strong>Recomendado: <span id="result-x">x</span></strong></p>
-                        <p>piezas para el lado "X"</p>
-                    </div>
+                        <div class="text-center mt-3">
+                            <p><strong>Recomendado: <span id="result-x">x</span></strong></p>
+                            <p>piezas para el lado "X"</p>
+                        </div>
                     </div>
                 </div>
             
-                <div class="col">
-                    <div class="p-5 rounded-5 bg-secondary text-white d-flex justify-content-center align-items-center flex-column">
-                    <h5 class="mb-3">Longitud Y</h5>
+                <div class="col mb-4 mb-lg-0">
+                    <div class="p-5 rounded bg-primary text-white d-flex flex-column shadow h-100">
+                    <h5 class="mb-3 text-center">Longitud Y</h5>
                     <div class="input-group mb-3">
                         <input id="width-tile" type="text" class="form-control" placeholder="Ingresa longitud Y" aria-label="Longitud Y" aria-describedby="basic-addon1" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
                         <div class="input-group-append">
                         <span class="input-group-text" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">cm</span>
                         </div>
                     </div>
-                    <div class="text-center">
+                    <div class="text-center mt-3">
                         <p><strong>Recomendado: <span id="result-y">y</span></strong></p>
                         <p>piezas para el lado "Y"</p>
                     </div>
                     </div>
                 </div>
                 
-                <div class="col">
-                    <div class="p-5 rounded-5 bg-primary text-white d-flex justify-content-center align-items-center flex-column">
-                    <h5 class="mb-3">Área Total de Asentamiento</h5>
+                <div class="col mb-4 mb-lg-0">
+                    <div class="p-5 rounded bg-secondary text-white d-flex flex-column shadow h-100">
+                    <h5 class="mb-3 text-center">Área Total a instalar</h5>
                     <div class="input-group mb-3">
                         <input id="length-area" type="text" class="form-control" placeholder="Ingresa el área" aria-label="Longitud Z" aria-describedby="basic-addon1" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
                         <div class="input-group-append">
                         <span class="input-group-text" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">m²</span>
                         </div>
                     </div>
-                    <div class="text-center">
-                        <p><strong>Cantidad de espaciadores:</strong></p>
-                        <p id="result-spacers">-</p>
+                    <div class="text-center mt-3">
+                        <p><strong>Cantidad de niveladores:</strong></p>
+                        <p><strong id="result-spacers-number">0</strong> niveladores</p>
+                        <p><strong id="result-spacers-covers">0</strong> fundas x <strong id="result-spacers-units">50</strong> unidades</p>
+                        <p><strong id="result-covers-wedges">0</strong> fundas de cuñas x <strong id="result-wedges-units">50</strong> unidades</p>
                     </div>
                     </div>
                 </div>

@@ -1,74 +1,208 @@
-(() => {
-    const data = [
-        { area: 10 * 10, spacers: 200 },
-        { area: 15 * 15, spacers: 89 },
-        { area: 20 * 20, spacers: 50 },
-        { area: 25 * 25, spacers: 32 },
-        { area: 30 * 30, spacers: 33 },
-        { area: 35 * 35, spacers: 28 },
-        { area: 40 * 40, spacers: 25 },
-        { area: 45 * 45, spacers: 20 },
-        { area: 50 * 50, spacers: 16 },
-        { area: 55 * 55, spacers: 13 },
-        { area: 60 * 60, spacers: 13 },
-        { area: 65 * 65, spacers: 11 },
-        { area: 70 * 70, spacers: 10 },
-        { area: 80 * 80, spacers: 9 },
-        { area: 90 * 90, spacers: 7 },
-        { area: 100 * 100, spacers: 6 },
-        { area: 110 * 110, spacers: 5 },
-        { area: 120 * 120, spacers: 5 },
-        { area: 140 * 140, spacers: 4 },
-        { area: 150 * 150, spacers: 3 },
-        { area: 180 * 180, spacers: 3 },
-        { area: 200 * 200, spacers: 3 },
-    ];
+const inputLengthX = document.getElementById('high-tile');
+const inputLengthY = document.getElementById('width-tile');
+const inputTotalArea = document.getElementById('length-area');
+const resultX = document.getElementById('result-x');
+const resultY = document.getElementById('result-y');
+const resultSpacersNumber = document.getElementById('result-spacers-number');
+const resultSpacersCovers = document.getElementById('result-spacers-covers');
+const resultSpacersUnits = document.getElementById('result-spacers-units');
+const resultCoversWedges = document.getElementById('result-covers-wedges');
+const resultWedgesUnits = document.getElementById('result-wedges-units');
 
-    const highTile = document.querySelector('#high-tile');
-    const widthTile = document.querySelector('#width-tile');
-    const lengthArea = document.querySelector('#length-area');
-    const resultX = document.querySelector('#result-x');
-    const resultY = document.querySelector('#result-y');
-    const resultSpacers = document.querySelector('#result-spacers');
+const STANDARD_MEASURE = 36;
+const UNITS_PER_COVER = 50;
+const WEDGES_PER_COVER_RATIO = 5;
+const UNITS_PER_WEDGE = 50;
+const SAFETY_MARGIN = 1.15;
 
-    const calculateSpacers = (high, width, aream2 ) => {
-        if (!high || !width) throw new Error("Es necesario el ingreso del alto y ancho de la baldosa");
-        
-        const area = high * width;
-        let point1 = data[0];
-        let point2 = data[data.length - 1];
-        const Ntile = ((aream2*10000) / area)*2;
-        
-        for (let i = 0; i < data.length - 1; i++) {
-            if (area >= data[i].area && area <= data[i + 1].area) {
-                point1 = data[i];
-                point2 = data[i + 1];
-                break;
-            }
-        }
+function isValidNumber(value, minimum = 0) {
+    const number = parseFloat(value);
+    return !isNaN(number) && number >= minimum && number > 0;
+}
 
-        const spacers = (point1.spacers + (area - point1.area) * (point2.spacers - point1.spacers) / (point2.area - point1.area))*aream2;
-        const spacersSide = Math.ceil(spacers/Ntile);
-        
-        renderResult(Math.round(spacers),spacersSide);
+function cleanInput(value, minimum = 0) {
+    if (!value || value.trim() === '') return null;
+    
+    const number = parseFloat(value.replace(',', '.'));
+    
+    if (!isValidNumber(number, minimum)) return null;
+    
+    return number;
+}
+
+function calculateSpacersPerSide(measure) {
+    return Math.max(1, Math.floor(measure / STANDARD_MEASURE));
+}
+
+function calculateSpacersPerTile(width, height) {
+    const spacersWidth = calculateSpacersPerSide(width);
+    const spacersHeight = calculateSpacersPerSide(height);
+    return (spacersWidth * 2) + (spacersHeight * 2);
+}
+
+function calculateTotalSpacers(width, height, areaM2) {
+    const tileArea = (width * height) / 10000;
+    
+    const numberOfTiles = Math.ceil(areaM2 / tileArea);
+    
+    const spacersPerTile = calculateSpacersPerTile(width, height);
+    
+    const totalSpacers = spacersPerTile * numberOfTiles;
+    
+    const recommendedSpacers = Math.ceil(totalSpacers * SAFETY_MARGIN);
+    
+    return {
+        spacersPerSide: {
+            width: calculateSpacersPerSide(width),
+            height: calculateSpacersPerSide(height)
+        },
+        spacersPerTile,
+        numberOfTiles,
+        totalSpacers,
+        recommendedSpacers,
+        tileArea: tileArea.toFixed(4)
     };
+}
 
-    const renderResult = (spacers,spacersSide) => {
-        if (!spacers) return;
-        resultSpacers.innerHTML = `${spacers} espaciadores`;
-        resultX.innerHTML = `${spacersSide}`;
-        resultY.innerHTML = `${spacersSide}`;
+function calculateWedgesFromSpacerCovers(spacerCovers) {
+    if (!spacerCovers || spacerCovers <= 0) {
+        return {
+            wedges: 0,
+            units: UNITS_PER_WEDGE
+        };
     }
-
-    const updateSpacers = () => {
-        const high = parseFloat(highTile.value);
-        const width = parseFloat(widthTile.value);
-        const aream2 = parseFloat(lengthArea.value);
-        calculateSpacers(high, width, aream2);
+    
+    const exactWedgeCovers = spacerCovers / WEDGES_PER_COVER_RATIO;
+    const wedgeCovers = Math.floor(exactWedgeCovers);
+    
+    return {
+        wedges: wedgeCovers,
+        units: UNITS_PER_WEDGE
     };
+}
 
+function calculateCoversAndUnits(totalSpacers) {
+    if (!totalSpacers || totalSpacers <= 0) {
+        return {
+            covers: 0,
+            units: UNITS_PER_COVER
+        };
+    }
+    
+    const exactCovers = totalSpacers / UNITS_PER_COVER;
+    const covers = Math.ceil(exactCovers);
+    
+    return {
+        covers,
+        units: UNITS_PER_COVER
+    };
+}
 
-    highTile.addEventListener('change', updateSpacers);
-    widthTile.addEventListener('change', updateSpacers);
-    lengthArea.addEventListener('change', updateSpacers);
-})();
+function updateResults() {
+    try {
+        const width = cleanInput(inputLengthX.value, 1);
+        const height = cleanInput(inputLengthY.value, 1);
+        const areaM2 = cleanInput(inputTotalArea.value, 0.1);
+        
+        if (width !== null) {
+            const spacersWidth = calculateSpacersPerSide(width);
+            resultX.textContent = spacersWidth;
+        } else {
+            resultX.textContent = 'x';
+        }
+        
+        if (height !== null) {
+            const spacersHeight = calculateSpacersPerSide(height);
+            resultY.textContent = spacersHeight;
+        } else {
+            resultY.textContent = 'y';
+        }
+        
+        if (width !== null && height !== null && areaM2 !== null) {
+            const spacerResults = calculateTotalSpacers(width, height, areaM2);
+            const coverResults = calculateCoversAndUnits(spacerResults.recommendedSpacers);
+            const wedgeResults = calculateWedgesFromSpacerCovers(coverResults.covers);
+            
+            resultSpacersNumber.textContent = spacerResults.recommendedSpacers;
+            resultSpacersCovers.textContent = coverResults.covers;
+            resultSpacersUnits.textContent = coverResults.units;
+        
+            resultCoversWedges.textContent = wedgeResults.wedges;
+            resultWedgesUnits.textContent = wedgeResults.units;
+        } else {
+            resultSpacersNumber.textContent = '0';
+            resultSpacersCovers.textContent = '0';
+            resultSpacersUnits.textContent = '0';
+            resultCoversWedges.textContent = '0';
+            resultWedgesUnits.textContent = '0';
+        }
+        
+    } catch (error) {
+        console.error('Error in calculation:', error);
+        clearResults();
+    }
+}
+
+function clearResults() {
+    resultX.textContent = 'x';
+    resultY.textContent = 'y';
+    resultSpacersNumber.textContent = '0';
+    resultSpacersCovers.textContent = '0';
+    resultSpacersUnits.textContent = '0';
+    resultCoversWedges.textContent = '0';
+    resultWedgesUnits.textContent = '0';
+}
+
+function handleInput(event) {
+    const value = event.target.value;
+    const cleanValue = value.replace(/[^0-9.,]/g, '');
+    
+    if (value !== cleanValue) {
+        event.target.value = cleanValue;
+    }
+    
+    clearTimeout(event.target.timeoutId);
+    event.target.timeoutId = setTimeout(updateResults, 300);
+}
+
+function handleChange() {
+    updateResults();
+}
+
+        
+function initializeCalculator() {
+    clearResults();
+    
+    [inputLengthX, inputLengthY, inputTotalArea].forEach(input => {
+        input.addEventListener('input', handleInput);
+        input.addEventListener('change', handleChange);
+        
+        input.addEventListener('keypress', (e) => {
+            const char = String.fromCharCode(e.which);
+            if (!/[0-9.,]/.test(char)) {
+                e.preventDefault();
+            }
+        });
+        
+        input.addEventListener('blur', () => {
+            setTimeout(updateResults, 100);
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeCalculator();
+});
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        calculateSpacersPerSide,
+        calculateSpacersPerTile,
+        calculateTotalSpacers,
+        calculateWedgesFromSpacerCovers,
+        calculateCoversAndUnits,
+        isValidNumber,
+        cleanInput,
+        STANDARD_MEASURE
+    };
+}

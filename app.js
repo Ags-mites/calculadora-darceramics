@@ -31,13 +31,13 @@ function cleanInput(value, minimum = 0) {
 }
 
 function calculateSpacersPerSide(measure) {
-    return Math.max(1, Math.floor(measure / STANDARD_MEASURE));
+    return Math.max(1, Math.round(measure / STANDARD_MEASURE));
 }
 
 function calculateSpacersPerTile(width, height) {
     const spacersWidth = calculateSpacersPerSide(width);
     const spacersHeight = calculateSpacersPerSide(height);
-    return (spacersWidth * 2) + (spacersHeight * 2);
+    return spacersWidth + spacersHeight;
 }
 
 function calculateTotalSpacers(width, height, areaM2) {
@@ -49,7 +49,8 @@ function calculateTotalSpacers(width, height, areaM2) {
     
     const totalSpacers = spacersPerTile * numberOfTiles;
     
-    const recommendedSpacers = Math.ceil(totalSpacers * SAFETY_MARGIN);
+    // const recommendedSpacers = Math.ceil(totalSpacers * SAFETY_MARGIN);
+    const recommendedSpacers = totalSpacers;
     
     return {
         spacersPerSide: {
@@ -73,7 +74,13 @@ function calculateWedgesFromSpacerCovers(spacerCovers) {
     }
     
     const exactWedgeCovers = spacerCovers / WEDGES_PER_COVER_RATIO;
-    const wedgeCovers = Math.floor(exactWedgeCovers);
+    let wedgeCovers;
+    
+    if (spacerCovers < 5) {
+        wedgeCovers = 1;
+    } else {
+        wedgeCovers = Math.ceil(exactWedgeCovers);
+    }
     
     return {
         wedges: wedgeCovers,
